@@ -69,6 +69,10 @@ function voice.activate()
 	voice.pseudo_random = PseudoRandom(0)
 	
 	minetest.register_on_chat_message(voice.on_chat_message)
+	
+	voice.register_chatcommand("t", "talk", "Talk", voice.talk_parameters)
+	voice.register_chatcommand("s", "shout", "Shout", voice.shout_parameters)
+	voice.register_chatcommand("w", "whisper", "Whisper", voice.whisper_parameters)
 end
 
 function voice.muffle(message)
@@ -86,6 +90,23 @@ end
 
 function voice.random(rate)
 	return (voice.pseudo_random:next(0, 100) / 100) <= rate
+end
+
+function voice.register_chatcommand(short, long, description, parameters)
+	local command = {
+		description = description,
+		params = "<message>",
+		func = function(player_name, message)
+			local player = minetest.get_player_by_name(player_name)
+			
+			voice.speak(player, message, parameters)
+			
+			return true
+		end
+	}
+	
+	minetest.register_chatcommand(short, command)
+	minetest.register_chatcommand(long, command)
 end
 
 function voice.speak(speaking_player, message, parameters)
