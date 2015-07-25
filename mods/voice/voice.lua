@@ -48,8 +48,8 @@ voice = {
 function voice.abstruse(message, rate)
 	local abstruse_message = ""
 	
-	for index = 1, string.len(message) - 2, 1 do
-		local piece = string.sub(message, index, 1)
+	for index = 1, string.len(message), 1 do
+		local piece = string.sub(message, index, index)
 		
 		if string.find(piece, "%w") ~= nil then
 			if voice.random(rate) then
