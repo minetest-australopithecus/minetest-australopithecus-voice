@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+    <title>Luadocs for mods/voice/voice.lua</title>
+    <link rel="stylesheet" href="../../../luadoc.css" type="text/css" />
+    <!--meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/-->
+</head>
+
+<body>
+<div id="container">
+
+<div id="product">
+    <div id="product_logo"></div>
+    <div id="product_name"><big><b></b></big></div>
+    <div id="product_description"></div>
+</div> <!-- id="product" -->
+
+<div id="main">
+
+<div id="navigation">
+
+
+<h1>LuaDoc</h1>
+<ul>
+	
+	<li><a href="../../../index.html">Index</a></li>
+	
+</ul>
+
+
+<!-- Module list -->
+
+
+
+<!-- File list -->
+
+<h1>Files</h1>
+<ul>
+
+	<li>
+		<a href="../../../files/mods/voice/init.html">mods/voice/init.lua</a>
+	</li>
+
+	<li><strong>mods/voice/voice.lua</strong></li>
+	
+</ul>
+
+
+
+
+
+
+</div> <!-- id="navigation" -->
+
+<div id="content">
+
+<h1>File <code>mods/voice/voice.lua</code></h1>
+
+
+
+
+
+
+
+<h2>Functions</h2>
+<table class="function_list">
+
+    <tr>
+    <td class="name" nowrap><a href="#voice.abstruse">voice.abstruse</a>&nbsp;(message, rate)</td>
+    <td class="summary">Abstruses the given message.</td>
+    </tr>
+
+    <tr>
+    <td class="name" nowrap><a href="#voice.activate">voice.activate</a>&nbsp;()</td>
+    <td class="summary">Activates the voice system.</td>
+    </tr>
+
+    <tr>
+    <td class="name" nowrap><a href="#voice.in_range">voice.in_range</a>&nbsp;(distance, range, line_of_sight)</td>
+    <td class="summary">Checks if the given distance is in the given range, considering the line of sight.</td>
+    </tr>
+
+    <tr>
+    <td class="name" nowrap><a href="#voice.muffle">voice.muffle</a>&nbsp;(message)</td>
+    <td class="summary">Muffles the given messages, meaning replaces everything with dots.</td>
+    </tr>
+
+    <tr>
+    <td class="name" nowrap><a href="#voice.on_chat_message">voice.on_chat_message</a>&nbsp;(name, message)</td>
+    <td class="summary">Callback for if a chat message is send.</td>
+    </tr>
+
+    <tr>
+    <td class="name" nowrap><a href="#voice.random">voice.random</a>&nbsp;(rate)</td>
+    <td class="summary">Gets a random chance based on the given rate.</td>
+    </tr>
+
+    <tr>
+    <td class="name" nowrap><a href="#voice.register_chatcommand">voice.register_chatcommand</a>&nbsp;(short, long, description, parameters)</td>
+    <td class="summary">Registers a chat chommand.</td>
+    </tr>
+
+    <tr>
+    <td class="name" nowrap><a href="#voice.speak">voice.speak</a>&nbsp;(speaking_player, message, parameters)</td>
+    <td class="summary">Speaks the given message.</td>
+    </tr>
+
+</table>
+
+
+
+
+
+
+<br/>
+<br/>
+
+
+
+
+<h2><a name="functions"></a>Functions</h2>
+<dl class="function">
+
+
+
+<dt><a name="voice.abstruse"></a><strong>voice.abstruse</strong>&nbsp;(message, rate)</dt>
+<dd>
+Abstruses the given message. That means that parts of it will be blanked, based on the rate. 
+
+
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  message: The message to abstruse.
+	</li>
+	
+	<li>
+	  rate: The rate at which to abstruse the message, a value between 0 and 1, with 1 being everything abstrused.
+	</li>
+	
+</ul>
+
+
+
+
+
+
+<h3>Return value:</h3>
+The abstrused message.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="voice.activate"></a><strong>voice.activate</strong>&nbsp;()</dt>
+<dd>
+Activates the voice system.
+
+
+
+
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="voice.in_range"></a><strong>voice.in_range</strong>&nbsp;(distance, range, line_of_sight)</dt>
+<dd>
+Checks if the given distance is in the given range, considering the line of sight. 
+
+
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  distance: The distance.
+	</li>
+	
+	<li>
+	  range: The range.
+	</li>
+	
+	<li>
+	  line_of_sight: If there is line of sight.
+	</li>
+	
+</ul>
+
+
+
+
+
+
+<h3>Return value:</h3>
+true if it is in range.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="voice.muffle"></a><strong>voice.muffle</strong>&nbsp;(message)</dt>
+<dd>
+Muffles the given messages, meaning replaces everything with dots. 
+
+
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  message: The message to muffle.
+	</li>
+	
+</ul>
+
+
+
+
+
+
+<h3>Return value:</h3>
+The muffled message.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="voice.on_chat_message"></a><strong>voice.on_chat_message</strong>&nbsp;(name, message)</dt>
+<dd>
+Callback for if a chat message is send. 
+
+
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  name: The name of the sending player.
+	</li>
+	
+	<li>
+	  message: The message that is send.
+	</li>
+	
+</ul>
+
+
+
+
+
+
+<h3>Return value:</h3>
+true if the message has been handled and should not be send.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="voice.random"></a><strong>voice.random</strong>&nbsp;(rate)</dt>
+<dd>
+Gets a random chance based on the given rate. 
+
+
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  rate: The rate. A number between 0 and 1, with 1 being always true.
+	</li>
+	
+</ul>
+
+
+
+
+
+
+<h3>Return value:</h3>
+true if there is a chance.
+
+
+
+</dd>
+
+
+
+
+<dt><a name="voice.register_chatcommand"></a><strong>voice.register_chatcommand</strong>&nbsp;(short, long, description, parameters)</dt>
+<dd>
+Registers a chat chommand. 
+
+
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  short: The short command.
+	</li>
+	
+	<li>
+	  long: The long command.
+	</li>
+	
+	<li>
+	  description: The description of the command.
+	</li>
+	
+	<li>
+	  parameters: The parameters to use.
+	</li>
+	
+</ul>
+
+
+
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="voice.speak"></a><strong>voice.speak</strong>&nbsp;(speaking_player, message, parameters)</dt>
+<dd>
+Speaks the given message. 
+
+
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  speaking_player: The speaking player, a Player Object.
+	</li>
+	
+	<li>
+	  message: The message that is spoken.
+	</li>
+	
+	<li>
+	  parameters: The speak parameters, like talk_parameters.
+	</li>
+	
+</ul>
+
+
+
+
+
+
+
+
+</dd>
+
+
+</dl>
+
+
+
+
+
+
+
+</div> <!-- id="content" -->
+
+</div> <!-- id="main" -->
+
+<div id="about">
+    <p><a href="http://validator.w3.org/check?uri=referer"><img src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML 1.0!" height="31" width="88" /></a></p>
+</div> <!-- id="about" -->
+
+</div> <!-- id="container" -->
+</body>
+</html>
