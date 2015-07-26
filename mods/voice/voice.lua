@@ -26,6 +26,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 voice = {
+	line_of_sight_mod = 0.40,
 	pseudo_random = nil,
 	talk_parameters = {
 		understandable = 6,
@@ -75,6 +76,14 @@ function voice.activate()
 	voice.register_chatcommand("w", "whisper", "Whisper", voice.whisper_parameters)
 end
 
+function voice.in_range(distance, range, line_of_sight)
+	if line_of_sight then
+		return distance <= range
+	else
+		return distance <= (range * voice.line_of_sight_mod)
+	end
+end
+
 function voice.muffle(message)
 	return string.gsub(message, "%w", ".")
 end
@@ -114,21 +123,37 @@ function voice.speak(speaking_player, message, parameters)
 	local name = speaking_player:get_player_name()
 	
 	for index, player in ipairs(minetest.get_connected_players()) do
-		local player_name = player:get_player_name()
-		local distance = mathutil.distance(source_pos, player)
+		local target_pos = player:getpos()
+		local distance = mathutil.distance(source_pos, target_pos)
 		
-		if distance <= parameters.understandable then
-			minetest.chat_send_player(player_name, "<" .. name .. "> " .. message)
-		elseif distance <= parameters.abstruse then
-			local rate = transform.linear(distance, parameters.understandable, parameters.abstruse)
+		-- Test now if we're even in range, minor optimization.
+		if distance <= parameters.incomprehensible then
+			local player_name = player:get_player_name()
 			
-			if voice.random(rate) then
-				minetest.chat_send_player(player_name, "<" .. voice.muffle(name) .. "> " ..  voice.abstruse(message, rate))
-			else
-				minetest.chat_send_player(player_name, "<" .. name .. "> " .. voice.abstruse(message, rate))
+			-- TODO The y+1 thing is to emulate players height, might be wrong.
+			local line_of_sight = minetest.line_of_sight({
+				x = source_pos.x,
+				y = source_pos.y + 1,
+				z = source_pos.z
+			}, {
+				x = target_pos.x,
+				y = target_pos.y + 1,
+				z = target_pos.z
+			})
+			
+			if voice.in_range(distance, parameters.understandable, line_of_sight) then
+				minetest.chat_send_player(player_name, "<" .. name .. "> " .. message)
+			elseif voice.in_range(distance, parameters.abstruse, line_of_sight) then
+				local rate = transform.linear(distance, parameters.understandable, parameters.abstruse)
+				
+				if voice.random(rate) then
+					minetest.chat_send_player(player_name, "<" .. voice.muffle(name) .. "> " ..  voice.abstruse(message, rate))
+				else
+					minetest.chat_send_player(player_name, "<" .. name .. "> " .. voice.abstruse(message, rate))
+				end
+			elseif voice.in_range(distanc, parameters.incomprehensible, line_of_sight) then
+				minetest.chat_send_player(player_name, "<" .. voice.muffle(name) .. "> " .. voice.muffle(message))
 			end
-		elseif distance <= parameters.incomprehensible then
-			minetest.chat_send_player(player_name, "<" .. voice.muffle(name) .. "> " .. voice.muffle(message))
 		end
 	end
 end
