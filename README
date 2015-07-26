@@ -1,0 +1,38 @@
+minetest-australopithecus-voice
+===============================
+
+A replacement for the default chat system that makes it behave more like voices.
+That means you can only see the messages of other players if you're in a certain
+range to them. If you move out of this range, you might only get part of
+the messages, or nothing at all.
+
+
+How does it work?
+=================
+
+There are basically three "volumes" a player can say something in, talk, shout
+and whisper. Shout reaches obviously the farthest, followed by talk and whisper.
+
+If you want to "hear" a player, you need to be in a certain range to them,
+otherwise you might only get part of what was said or nothing at all.
+Additionally, if you can't see the player, the range is further limited, that
+means that a wall will severly impact if you're able to hear a player or not.
+
+By default a player only talks, that means that every normal chat message
+is converted. Additionally there are the following commands avaialble:
+
+    /t or /talk		Talk, medium range. Is default for messages.
+    /w or /whisper	Whisper, low range.
+    /s or /shout	Shout, high range.
+
+There is no global chat anymore as long as voice is activated.
+
+
+How to use it?
+==============
+
+Simple, just add this to your `init.lua`, or wherever the main initialization
+of your stuff happens. Of course don't forget to add voice as depdency.
+
+    voice.activate()
+
