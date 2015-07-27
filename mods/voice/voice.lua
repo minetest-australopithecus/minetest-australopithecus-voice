@@ -235,7 +235,7 @@ function voice.speak(speaking_player, message, parameters)
 							target_name,
 							"<" .. source_name .. "> " .. voice.abstruse(message, rate))
 					end
-				elseif voice.in_range(distanc, parameters.incomprehensible, line_of_sight) then
+				elseif voice.in_range(distance, parameters.incomprehensible, line_of_sight) then
 					minetest.chat_send_player(
 					target_name,
 					"<" .. voice.muffle(source_name) .. "> " .. voice.muffle(message))
