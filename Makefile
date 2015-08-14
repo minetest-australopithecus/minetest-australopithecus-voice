@@ -7,5 +7,5 @@ clean:
 
 .PHONY: doc
 doc:
-	luadoc -d $(doc) mods/voice
+	ldoc --dir=$(doc) mods/voice
 

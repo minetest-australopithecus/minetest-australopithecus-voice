@@ -86,7 +86,7 @@ voice = {
 --
 -- @param message The message to abstruse.
 -- @param rate The rate at which to abstruse the message, a value between
--- 0 and 1, with 1 being everything abstrused.
+--             0 and 1, with 1 being everything abstrused.
 -- @return The abstrused message.
 function voice.abstruse(message, rate)
 	local abstruse_message = ""
