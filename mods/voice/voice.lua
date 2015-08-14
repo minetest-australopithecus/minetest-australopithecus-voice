@@ -111,7 +111,7 @@ end
 
 --- Activates the voice system.
 function voice.activate()
-	voice.pseudo_random = PseudoRandom(0)
+	voice.pseudo_random = PcgRandom(os.time())
 	
 	minetest.register_on_chat_message(voice.on_chat_message)
 	
