@@ -118,6 +118,7 @@ function voice.activate()
 	voice.register_chatcommand("t", "talk", "Talk", voice.talk_parameters)
 	voice.register_chatcommand("s", "shout", "Shout", voice.shout_parameters)
 	voice.register_chatcommand("w", "whisper", "Whisper", voice.whisper_parameters)
+	voice.register_global_chatcommand()
 end
 
 --- Checks if the given distance is in the given range, considering
@@ -187,6 +188,35 @@ function voice.register_chatcommand(short, long, description, parameters)
 	
 	minetest.register_chatcommand(short, command)
 	minetest.register_chatcommand(long, command)
+end
+
+--- Registers the chat command for global messaging.
+function voice.register_global_chatcommand()
+	minetest.register_privilege("voice_global", {
+		description = "Allows the player to send global messages.",
+		give_to_singleplayer = true
+	})
+	
+	local command = {
+		description = "Global",
+		params = "<message>",
+		func = function(player_name, message)
+			if minetest.check_player_privs(player_name, { voice_global = true }) then
+				for index, player in ipairs(minetest.get_connected_players()) do
+					minetest.chat_send_player(
+						player:get_player_name(),
+						"<" .. player_name .. "> " .. message)
+				end
+				
+				return true
+			end
+			
+			return false, "Denied"
+		end
+	}
+	
+	minetest.register_chatcommand("g", command)
+	minetest.register_chatcommand("global", command)
 end
 
 --- Speaks the given message.

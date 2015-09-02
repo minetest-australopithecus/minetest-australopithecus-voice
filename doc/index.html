@@ -1,0 +1,494 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="ldoc.css" type="text/css" />
+</head>
+<body>
+
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+
+<div id="main">
+
+
+<!-- Menu -->
+
+<div id="navigation">
+<br/>
+<h1>ldoc</h1>
+
+
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+<li><a href="#Tables">Tables</a></li>
+<li><a href="#Fields">Fields</a></li>
+</ul>
+
+
+<h2>Modules</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><strong>voice</strong></li>
+</ul>
+
+</div>
+
+<div id="content">
+
+<h1>Module <code>voice</code></h1>
+<p>Voice is a system to make the chat of Minetest more like a voice.</p>
+<p>
+<p> The only function that should be called from the client is activate.</p>
+
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#abstruse">abstruse (message, rate)</a></td>
+	<td class="summary">Abstruses the given message.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#activate">activate ()</a></td>
+	<td class="summary">Activates the voice system.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#in_range">in_range (distance, range, line_of_sight)</a></td>
+	<td class="summary">Checks if the given distance is in the given range, considering
+ the line of sight.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#muffle">muffle (message)</a></td>
+	<td class="summary">Muffles the given messages, meaning replaces everything with dots.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#on_chat_message">on_chat_message (name, message)</a></td>
+	<td class="summary">Callback for if a chat message is send.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#random">random (rate)</a></td>
+	<td class="summary">Gets a random chance based on the given rate.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#register_chatcommand">register_chatcommand (short, long, description, parameters)</a></td>
+	<td class="summary">Registers a chat chommand.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#register_global_chatcommand">register_global_chatcommand ()</a></td>
+	<td class="summary">Registers the chat command for global messaging.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#speak">speak (speaking_player, message, parameters)</a></td>
+	<td class="summary">Speaks the given message.</td>
+	</tr>
+</table>
+<h2><a href="#Tables">Tables</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#talk_parameters">talk_parameters</a></td>
+	<td class="summary">The parameters for talking.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#shout_parameters">shout_parameters</a></td>
+	<td class="summary">The parameters for shouting.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#whisper_parameters">whisper_parameters</a></td>
+	<td class="summary">The parameters for whispering.</td>
+	</tr>
+</table>
+<h2><a href="#Fields">Fields</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#line_of_sight_mod">line_of_sight_mod</a></td>
+	<td class="summary">The line of sight modification, which means that if the target does not
+ have line of sight with the source, this mod will be applied to
+ the range to limit it.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#pseudo_random">pseudo_random</a></td>
+	<td class="summary">The source for random chances when modifying messages.</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2><a name="Functions"></a>Functions</h2>
+    <dl class="function">
+    <dt>
+    <a name = "abstruse"></a>
+    <strong>abstruse (message, rate)</strong>
+    </dt>
+    <dd>
+    Abstruses the given message.  That means that parts of it will be blanked,
+ based on the rate.
+
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">message</span>
+         The message to abstruse.
+        </li>
+        <li><span class="parameter">rate</span>
+         The rate at which to abstruse the message, a value between
+             0 and 1, with 1 being everything abstrused.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        The abstrused message.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "activate"></a>
+    <strong>activate ()</strong>
+    </dt>
+    <dd>
+    Activates the voice system.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "in_range"></a>
+    <strong>in_range (distance, range, line_of_sight)</strong>
+    </dt>
+    <dd>
+    Checks if the given distance is in the given range, considering
+ the line of sight.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">distance</span>
+         The distance.
+        </li>
+        <li><span class="parameter">range</span>
+         The range.
+        </li>
+        <li><span class="parameter">line_of_sight</span>
+         If there is line of sight.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        true if it is in range.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "muffle"></a>
+    <strong>muffle (message)</strong>
+    </dt>
+    <dd>
+    Muffles the given messages, meaning replaces everything with dots.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">message</span>
+         The message to muffle.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        The muffled message.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "on_chat_message"></a>
+    <strong>on_chat_message (name, message)</strong>
+    </dt>
+    <dd>
+    Callback for if a chat message is send.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">name</span>
+         The name of the sending player.
+        </li>
+        <li><span class="parameter">message</span>
+         The message that is send.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        true if the message has been handled and should not be send.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "random"></a>
+    <strong>random (rate)</strong>
+    </dt>
+    <dd>
+    Gets a random chance based on the given rate.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">rate</span>
+         The rate. A number between 0 and 1, with 1 being always true.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        true if there is a chance.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "register_chatcommand"></a>
+    <strong>register_chatcommand (short, long, description, parameters)</strong>
+    </dt>
+    <dd>
+    Registers a chat chommand.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">short</span>
+         The short command.
+        </li>
+        <li><span class="parameter">long</span>
+         The long command.
+        </li>
+        <li><span class="parameter">description</span>
+         The description of the command.
+        </li>
+        <li><span class="parameter">parameters</span>
+         The parameters to use.
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "register_global_chatcommand"></a>
+    <strong>register_global_chatcommand ()</strong>
+    </dt>
+    <dd>
+    Registers the chat command for global messaging.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "speak"></a>
+    <strong>speak (speaking_player, message, parameters)</strong>
+    </dt>
+    <dd>
+    Speaks the given message.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">speaking_player</span>
+         The speaking player, a Player Object.
+        </li>
+        <li><span class="parameter">message</span>
+         The message that is spoken.
+        </li>
+        <li><span class="parameter">parameters</span>
+         The speak parameters, like talk_parameters.
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+    <h2><a name="Tables"></a>Tables</h2>
+    <dl class="function">
+    <dt>
+    <a name = "talk_parameters"></a>
+    <strong>talk_parameters</strong>
+    </dt>
+    <dd>
+    The parameters for talking.
+
+
+    <h3>Fields:</h3>
+    <ul>
+        <li><span class="parameter">understandable</span>
+        Everything within this range (inclusive) will be abstruse, which means that only part of the message (depending on the distance) will be understandable.
+        </li>
+        <li><span class="parameter">abstruse</span>
+        Everything within this range (inclusive) will not be understandable.
+        </li>
+        <li><span class="parameter">incomprehensible</span>
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        Everything within this range (inclusive) will be understandable.
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "shout_parameters"></a>
+    <strong>shout_parameters</strong>
+    </dt>
+    <dd>
+    The parameters for shouting.
+
+
+    <h3>Fields:</h3>
+    <ul>
+        <li><span class="parameter">understandable</span>
+        Everything within this range (inclusive) will be abstruse, which means that only part of the message (depending on the distance) will be understandable.
+        </li>
+        <li><span class="parameter">abstruse</span>
+        Everything within this range (inclusive) will not be understandable.
+        </li>
+        <li><span class="parameter">incomprehensible</span>
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        Everything within this range (inclusive) will be understandable.
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "whisper_parameters"></a>
+    <strong>whisper_parameters</strong>
+    </dt>
+    <dd>
+    The parameters for whispering.
+
+
+    <h3>Fields:</h3>
+    <ul>
+        <li><span class="parameter">understandable</span>
+        Everything within this range (inclusive) will be abstruse, which means that only part of the message (depending on the distance) will be understandable.
+        </li>
+        <li><span class="parameter">abstruse</span>
+        Everything within this range (inclusive) will not be understandable.
+        </li>
+        <li><span class="parameter">incomprehensible</span>
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        Everything within this range (inclusive) will be understandable.
+
+    </ol>
+
+
+
+
+</dd>
+</dl>
+    <h2><a name="Fields"></a>Fields</h2>
+    <dl class="function">
+    <dt>
+    <a name = "line_of_sight_mod"></a>
+    <strong>line_of_sight_mod</strong>
+    </dt>
+    <dd>
+    The line of sight modification, which means that if the target does not
+ have line of sight with the source, this mod will be applied to
+ the range to limit it.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "pseudo_random"></a>
+    <strong>pseudo_random</strong>
+    </dt>
+    <dd>
+    The source for random chances when modifying messages.
+
+
+
+
+
+
+
+</dd>
+</dl>
+
+
+</div> <!-- id="content" -->
+</div> <!-- id="main" -->
+<div id="about">
+<i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.2</a></i>
+</div> <!-- id="about" -->
+</div> <!-- id="container" -->
+</body>
+</html>

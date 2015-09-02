@@ -24,6 +24,7 @@ is converted. Additionally there are the following commands avaialble:
     /t or /talk		Talk, medium range. Is default for messages.
     /w or /whisper	Whisper, low range.
     /s or /shout	Shout, high range.
+    /g or /global	Global, needs voice_global privilege
 
 There is no global chat anymore as long as voice is activated.
 
