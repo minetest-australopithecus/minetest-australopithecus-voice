@@ -21,10 +21,10 @@ means that a wall will severly impact if you're able to hear a player or not.
 By default a player only talks, that means that every normal chat message
 is converted. Additionally there are the following commands avaialble:
 
-    /t or /talk		Talk, medium range. Is default for messages.
-    /w or /whisper	Whisper, low range.
-    /s or /shout	Shout, high range.
-    /g or /global	Global, needs voice_global privilege
+    /t or /talk     Talk, medium range. Is default for messages.
+    /w or /whisper  Whisper, low range.
+    /s or /shout    Shout, high range.
+    /g or /global   Global, needs voice_global privilege
 
 There is no global chat anymore as long as voice is activated.
 
@@ -36,4 +36,43 @@ Simple, just add this to your `init.lua`, or wherever the main initialization
 of your stuff happens. Of course don't forget to add voice as depdency.
 
     voice.activate()
+
+
+Callbacks
+=========
+
+You can register callbacks for every send message in which you can either
+suppress or modify it. The signature for the callbacks is:
+
+    function(
+        player,     -- The Player object of the player that is sending
+                    -- the message.
+        type,       -- The type of the message, one of the voice.TYPE_*
+                    -- constants.
+        suppressed, -- If the message would be suppressed.
+        message)    -- The message itself.
+    
+    returns
+        suppress,   -- true if the message should be suppressed.
+                    -- nil to keep the current status.
+        message     -- The message that should be send instead.
+                    -- nil to keep the current message.
+
+Some examples:
+
+    -- This callback suppresses all shouts.
+    voice.register_on_message(function(player, type, suppressed, message)
+        return (type == voice.TYPE_SHOUT)
+    end)
+    
+    -- This callback sends a completely different message.
+    voice.register_on_message(function(player, type, suppressed, message)
+        return false, "Hello there!"
+    end)
+   
+
+The callbacks are called in the order they have been registered, the last
+callback is the one that can decide whether the message is actually send or
+suppressed. If the message is is modified, the modified message is handed
+to all callbacks that follow.
 

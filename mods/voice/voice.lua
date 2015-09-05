@@ -29,27 +29,30 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 --
 -- The only function that should be called from the client is activate.
 voice = {
+	--- Type constant for a global message.
+	TYPE_GLOBAL = "global",
+	
+	--- Type constant for a shouted message.
+	TYPE_SHOUT = "shout",
+	
+	--- Type constant for a talked message.
+	TYPE_TALK = "talk",
+	
+	--- Type constant for a whispered message.
+	TYPE_WHISPER = "whisper",
+	
 	--- The line of sight modification, which means that if the target does not
 	-- have line of sight with the source, this mod will be applied to
 	-- the range to limit it.
 	line_of_sight_mod = 0.40,
 	
+	--- The callbacks for when a message is send.
+	message_callbacks = List:new(),
+	
 	--- The source for random chances when modifying messages.
 	pseudo_random = nil,
 	
 	--- The parameters for talking.
-	talk_parameters = {
-		--- Everything within this range (inclusive) will be understandable.
-		understandable = 6,
-		
-		--- Everything within this range (inclusive) will be abstruse, which
-		-- means that only part of the message (depending on the distance) will
-		-- be understandable.
-		abstruse = 12,
-		
-		--- Everything within this range (inclusive) will not be understandable.
-		incomprehensible = 17
-	},
 	
 	--- The parameters for shouting.
 	shout_parameters = {
@@ -62,7 +65,26 @@ voice = {
 		abstruse = 60,
 		
 		--- Everything within this range (inclusive) will not be understandable.
-		incomprehensible = 80
+		incomprehensible = 80,
+		
+		-- The type of these parameters.
+		type = "shout"
+	},
+	
+	talk_parameters = {
+		--- Everything within this range (inclusive) will be understandable.
+		understandable = 6,
+		
+		--- Everything within this range (inclusive) will be abstruse, which
+		-- means that only part of the message (depending on the distance) will
+		-- be understandable.
+		abstruse = 12,
+		
+		--- Everything within this range (inclusive) will not be understandable.
+		incomprehensible = 17,
+		
+		-- The type of these parameters.
+		type = "talk"
 	},
 	
 	--- The parameters for whispering.
@@ -76,7 +98,10 @@ voice = {
 		abstruse = 4,
 		
 		--- Everything within this range (inclusive) will not be understandable.
-		incomprehensible = 5
+		incomprehensible = 5,
+		
+		-- The type of these parameters.
+		type = "whisper"
 	}
 }
 
@@ -134,6 +159,36 @@ function voice.in_range(distance, range, line_of_sight)
 	else
 		return distance <= (range * voice.line_of_sight_mod)
 	end
+end
+
+--- Invokes all registered message callbacks.
+--
+-- @param player The player that is sending the message.
+-- @param type The type of the message.
+-- @param message The message to be send.
+-- @return true if the message should be suppressed, and the second return
+--         value is the modified message.
+function voice.invoke_message_callbacks(player, type, message)
+	local suppress = false
+	voice.message_callbacks:foreach(function(callback, index)
+		local modified_suppress = nil
+		local modified_message = nil
+		
+		modified_suppress, modified_message = callback(
+			player,
+			type,
+			suppress,
+			message)
+		
+		if modified_suppress ~= nil then
+			suppress = modified_suppress
+		end
+		if modified_message ~= nil then
+			message = modified_message
+		end
+	end)
+	
+	return suppress, message
 end
 
 --- Muffles the given messages, meaning replaces everything with dots.
@@ -201,6 +256,15 @@ function voice.register_global_chatcommand()
 		description = "Global",
 		params = "<message>",
 		func = function(player_name, message)
+			local suppress, message = voice.invoke_message_callbacks(
+				minetest.get_player_by_name(player_name),
+				voice.TYPE_GLOBAL,
+				message)
+			
+			if suppress then
+				return true
+			end
+			
 			if minetest.check_player_privs(player_name, { voice_global = true }) then
 				for index, player in ipairs(minetest.get_connected_players()) do
 					minetest.chat_send_player(
@@ -219,12 +283,35 @@ function voice.register_global_chatcommand()
 	minetest.register_chatcommand("global", command)
 end
 
+--- Registers a callback that is invoked for every message that is send.
+--
+-- @param callback The callback that is to be registered, a function that
+--                 accepts the player (Player object), the type of the message
+--                 (TYPE_* constants), if the message is going to be send and
+--                 the message itself. The callback can return two values,
+--                 the first, a boolean that is true if the message should
+--                 be suppressed, and the second being a message to be sent
+--                 instead. The last callback can determine if the message
+--                 should actually be send or not.
+function voice.register_on_message(callback)
+	voice.message_callbacks:add(callback)
+end
+
 --- Speaks the given message.
 --
 -- @param speaking_player The speaking player, a Player Object.
 -- @param message The message that is spoken.
 -- @param parameters The speak parameters, like talk_parameters.
 function voice.speak(speaking_player, message, parameters)
+	local suppress, message = voice.invoke_message_callbacks(
+		speaking_player,
+		parameters.type,
+		message)
+	
+	if suppress then
+		return
+	end
+	
 	local source_name = speaking_player:get_player_name()
 	local source_pos = speaking_player:getpos()
 	
