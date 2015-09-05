@@ -66,6 +66,10 @@
  the line of sight.</td>
 	</tr>
 	<tr>
+	<td class="name" nowrap><a href="#invoke_message_callbacks">invoke_message_callbacks (player, type, message)</a></td>
+	<td class="summary">Invokes all registered message callbacks.</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#muffle">muffle (message)</a></td>
 	<td class="summary">Muffles the given messages, meaning replaces everything with dots.</td>
 	</tr>
@@ -86,16 +90,16 @@
 	<td class="summary">Registers the chat command for global messaging.</td>
 	</tr>
 	<tr>
+	<td class="name" nowrap><a href="#register_on_message">register_on_message (callback)</a></td>
+	<td class="summary">Registers a callback that is invoked for every message that is send.</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#speak">speak (speaking_player, message, parameters)</a></td>
 	<td class="summary">Speaks the given message.</td>
 	</tr>
 </table>
 <h2><a href="#Tables">Tables</a></h2>
 <table class="function_list">
-	<tr>
-	<td class="name" nowrap><a href="#talk_parameters">talk_parameters</a></td>
-	<td class="summary">The parameters for talking.</td>
-	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#shout_parameters">shout_parameters</a></td>
 	<td class="summary">The parameters for shouting.</td>
@@ -108,14 +112,48 @@
 <h2><a href="#Fields">Fields</a></h2>
 <table class="function_list">
 	<tr>
+	<td class="name" nowrap><a href="#TYPE_GLOBAL">TYPE_GLOBAL</a></td>
+	<td class="summary">Type constant for a global message.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#TYPE_SHOUT">TYPE_SHOUT</a></td>
+	<td class="summary">Type constant for a shouted message.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#TYPE_TALK">TYPE_TALK</a></td>
+	<td class="summary">Type constant for a talked message.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#TYPE_WHISPER">TYPE_WHISPER</a></td>
+	<td class="summary">Type constant for a whispered message.</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#line_of_sight_mod">line_of_sight_mod</a></td>
 	<td class="summary">The line of sight modification, which means that if the target does not
  have line of sight with the source, this mod will be applied to
  the range to limit it.</td>
 	</tr>
 	<tr>
+	<td class="name" nowrap><a href="#message_callbacks">message_callbacks</a></td>
+	<td class="summary">The callbacks for when a message is send.</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#pseudo_random">pseudo_random</a></td>
 	<td class="summary">The source for random chances when modifying messages.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#understandable">understandable</a></td>
+	<td class="summary">Everything within this range (inclusive) will be understandable.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#abstruse">abstruse</a></td>
+	<td class="summary">Everything within this range (inclusive) will be abstruse, which
+ means that only part of the message (depending on the distance) will
+ be understandable.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#incomprehensible">incomprehensible</a></td>
+	<td class="summary">Everything within this range (inclusive) will not be understandable.</td>
 	</tr>
 </table>
 
@@ -196,6 +234,38 @@
     <ol>
 
         true if it is in range.
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "invoke_message_callbacks"></a>
+    <strong>invoke_message_callbacks (player, type, message)</strong>
+    </dt>
+    <dd>
+    Invokes all registered message callbacks.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">player</span>
+         The player that is sending the message.
+        </li>
+        <li><span class="parameter">type</span>
+         The type of the message.
+        </li>
+        <li><span class="parameter">message</span>
+         The message to be send.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+        true if the message should be suppressed, and the second return
+         value is the modified message.
     </ol>
 
 
@@ -324,6 +394,33 @@
 
 </dd>
     <dt>
+    <a name = "register_on_message"></a>
+    <strong>register_on_message (callback)</strong>
+    </dt>
+    <dd>
+    Registers a callback that is invoked for every message that is send.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">callback</span>
+         The callback that is to be registered, a function that
+                 accepts the player (Player object), the type of the message
+                 (TYPE_* constants), if the message is going to be send and
+                 the message itself. The callback can return two values,
+                 the first, a boolean that is true if the message should
+                 be suppressed, and the second being a message to be sent
+                 instead. The last callback can determine if the message
+                 should actually be send or not.
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
     <a name = "speak"></a>
     <strong>speak (speaking_player, message, parameters)</strong>
     </dt>
@@ -353,38 +450,6 @@
     <h2><a name="Tables"></a>Tables</h2>
     <dl class="function">
     <dt>
-    <a name = "talk_parameters"></a>
-    <strong>talk_parameters</strong>
-    </dt>
-    <dd>
-    The parameters for talking.
-
-
-    <h3>Fields:</h3>
-    <ul>
-        <li><span class="parameter">understandable</span>
-        Everything within this range (inclusive) will be abstruse, which means that only part of the message (depending on the distance) will be understandable.
-        </li>
-        <li><span class="parameter">abstruse</span>
-        Everything within this range (inclusive) will not be understandable.
-        </li>
-        <li><span class="parameter">incomprehensible</span>
-
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-        Everything within this range (inclusive) will be understandable.
-
-    </ol>
-
-
-
-
-</dd>
-    <dt>
     <a name = "shout_parameters"></a>
     <strong>shout_parameters</strong>
     </dt>
@@ -401,6 +466,9 @@
         Everything within this range (inclusive) will not be understandable.
         </li>
         <li><span class="parameter">incomprehensible</span>
+        The type of these parameters.
+        </li>
+        <li><span class="parameter">type</span>
 
         </li>
     </ul>
@@ -433,6 +501,9 @@
         Everything within this range (inclusive) will not be understandable.
         </li>
         <li><span class="parameter">incomprehensible</span>
+        The type of these parameters.
+        </li>
+        <li><span class="parameter">type</span>
 
         </li>
     </ul>
@@ -452,6 +523,62 @@
     <h2><a name="Fields"></a>Fields</h2>
     <dl class="function">
     <dt>
+    <a name = "TYPE_GLOBAL"></a>
+    <strong>TYPE_GLOBAL</strong>
+    </dt>
+    <dd>
+    Type constant for a global message.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "TYPE_SHOUT"></a>
+    <strong>TYPE_SHOUT</strong>
+    </dt>
+    <dd>
+    Type constant for a shouted message.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "TYPE_TALK"></a>
+    <strong>TYPE_TALK</strong>
+    </dt>
+    <dd>
+    Type constant for a talked message.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "TYPE_WHISPER"></a>
+    <strong>TYPE_WHISPER</strong>
+    </dt>
+    <dd>
+    Type constant for a whispered message.
+
+
+
+
+
+
+
+</dd>
+    <dt>
     <a name = "line_of_sight_mod"></a>
     <strong>line_of_sight_mod</strong>
     </dt>
@@ -468,11 +595,69 @@
 
 </dd>
     <dt>
+    <a name = "message_callbacks"></a>
+    <strong>message_callbacks</strong>
+    </dt>
+    <dd>
+    The callbacks for when a message is send.
+
+
+
+
+
+
+
+</dd>
+    <dt>
     <a name = "pseudo_random"></a>
     <strong>pseudo_random</strong>
     </dt>
     <dd>
     The source for random chances when modifying messages.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "understandable"></a>
+    <strong>understandable</strong>
+    </dt>
+    <dd>
+    Everything within this range (inclusive) will be understandable.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "abstruse"></a>
+    <strong>abstruse</strong>
+    </dt>
+    <dd>
+    Everything within this range (inclusive) will be abstruse, which
+ means that only part of the message (depending on the distance) will
+ be understandable.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "incomprehensible"></a>
+    <strong>incomprehensible</strong>
+    </dt>
+    <dd>
+    Everything within this range (inclusive) will not be understandable.
 
 
 
