@@ -266,11 +266,7 @@ function voice.register_global_chatcommand()
 			end
 			
 			if minetest.check_player_privs(player_name, { voice_global = true }) then
-				for index, player in ipairs(minetest.get_connected_players()) do
-					minetest.chat_send_player(
-						player:get_player_name(),
-						"<" .. player_name .. "> " .. message)
-				end
+				minetest.chat_send_all("<" .. player_name .. "> " .. message)
 				
 				return true
 			end
