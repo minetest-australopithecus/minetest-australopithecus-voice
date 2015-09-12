@@ -29,14 +29,43 @@ is converted. Additionally there are the following commands avaialble:
 There is no global chat anymore as long as voice is activated.
 
 
-How to use it?
-==============
+Usage
+=====
 
-Simple, just add this to your `init.lua`, or wherever the main initialization
-of your stuff happens. Of course don't forget to add voice as depdency.
+The system activates itself, you just need to add the mod to the subgame.
 
-    voice.activate()
 
+Configuration
+=============
+
+The system can be configured by adding settings to the `minetest.conf`:
+
+    # If the system should be activated, defaults to true.
+    voice_activate = true.
+    
+    # The modificator which is applied to the ranges if the target
+    # does not have a line of sight to the source, defaults to 0.4.
+    voice_line_of_sight_mod = 0.4
+    
+    
+    # The parameters that follow are range definitions.
+    # Understandable: Everything within this range will be understandable.
+    # Abstruse: Everything within this range will be abstrused the further
+    #           the target is away.
+    # Incomprehensible: Everything within this range will not be understandable.
+    
+    voice_shout_understandable = 45
+    voice_shout_abstruse = 60
+    voice_shout_incomprehensible = 80
+    
+    voice_talk_understandable = 6
+    voice_talk_abstruse = 12
+    voice_talk_incomprehensible = 17
+    
+    voice_whisper_understandable = 3
+    voice_whisper_abstruse = 4
+    voice_whisper_incomprehensible = 5
+    
 
 Callbacks
 =========

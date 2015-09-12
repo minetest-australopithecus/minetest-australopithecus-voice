@@ -44,7 +44,7 @@ voice = {
 	--- The line of sight modification, which means that if the target does not
 	-- have line of sight with the source, this mod will be applied to
 	-- the range to limit it.
-	line_of_sight_mod = 0.40,
+	line_of_sight_mod = settings.get_number("voice_line_of_sight_mod", 0.40),
 	
 	--- The callbacks for when a message is send.
 	message_callbacks = List:new(),
@@ -57,15 +57,15 @@ voice = {
 	--- The parameters for shouting.
 	shout_parameters = {
 		--- Everything within this range (inclusive) will be understandable.
-		understandable = 45,
+		understandable = settings.get_number("voice_shout_understandable", 45),
 		
 		--- Everything within this range (inclusive) will be abstruse, which
 		-- means that only part of the message (depending on the distance) will
 		-- be understandable.
-		abstruse = 60,
+		abstruse = settings.get_number("voice_shout_abstruse", 60),
 		
 		--- Everything within this range (inclusive) will not be understandable.
-		incomprehensible = 80,
+		incomprehensible = settings.get_number("voice_shout_incomprehensible", 80),
 		
 		-- The type of these parameters.
 		type = "shout"
@@ -73,15 +73,15 @@ voice = {
 	
 	talk_parameters = {
 		--- Everything within this range (inclusive) will be understandable.
-		understandable = 6,
+		understandable = settings.get_number("voice_talk_understandable", 6),
 		
 		--- Everything within this range (inclusive) will be abstruse, which
 		-- means that only part of the message (depending on the distance) will
 		-- be understandable.
-		abstruse = 12,
+		abstruse = settings.get_number("voice_talk_abstruse", 12),
 		
 		--- Everything within this range (inclusive) will not be understandable.
-		incomprehensible = 17,
+		incomprehensible = settings.get_number("voice_talk_incomprehenisble", 17),
 		
 		-- The type of these parameters.
 		type = "talk"
@@ -90,15 +90,15 @@ voice = {
 	--- The parameters for whispering.
 	whisper_parameters = {
 		--- Everything within this range (inclusive) will be understandable.
-		understandable = 3,
+		understandable = settings.get_number("voice_whisper_understandable", 3),
 		
 		--- Everything within this range (inclusive) will be abstruse, which
 		-- means that only part of the message (depending on the distance) will
 		-- be understandable.
-		abstruse = 4,
+		abstruse = settings.get_number("voice_whisper_abstruse", 4),
 		
 		--- Everything within this range (inclusive) will not be understandable.
-		incomprehensible = 5,
+		incomprehensible = settings.get_number("voice_whisper_incomprehensible", 5),
 		
 		-- The type of these parameters.
 		type = "whisper"
