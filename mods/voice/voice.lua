@@ -266,7 +266,7 @@ function voice.register_global_chatcommand()
 			end
 			
 			if minetest.check_player_privs(player_name, { voice_global = true }) then
-				minetest.chat_send_all("<" .. player_name .. "> " .. message)
+				minetest.chat_send_all("<" .. player_name .. "/g> " .. message)
 				
 				return true
 			end
@@ -330,11 +330,12 @@ function voice.speak(speaking_player, message, parameters)
 					y = target_pos.y + 1,
 					z = target_pos.z
 				})
+				local short_type = string.sub(parameters.type, 1, 1)
 				
 				if voice.in_range(distance, parameters.understandable, line_of_sight) then
 					minetest.chat_send_player(
 						target_name,
-						"<" .. source_name .. "> " .. message)
+						"<" .. source_name .. "/" .. short_type .. "> " .. message)
 				elseif voice.in_range(distance, parameters.abstruse, line_of_sight) then
 					local rate = transform.linear(distance, parameters.understandable, parameters.abstruse)
 					
@@ -342,16 +343,16 @@ function voice.speak(speaking_player, message, parameters)
 					if voice.random(rate) then
 						minetest.chat_send_player(
 							target_name,
-							"<" .. voice.muffle(source_name) .. "> " ..  voice.abstruse(message, rate))
+							"<" .. voice.muffle(source_name) .. "/" .. short_type .. "> " ..  voice.abstruse(message, rate))
 					else
 						minetest.chat_send_player(
 							target_name,
-							"<" .. source_name .. "> " .. voice.abstruse(message, rate))
+							"<" .. source_name .. "/" .. short_type .. "> " .. voice.abstruse(message, rate))
 					end
 				elseif voice.in_range(distance, parameters.incomprehensible, line_of_sight) then
 					minetest.chat_send_player(
 					target_name,
-					"<" .. voice.muffle(source_name) .. "> " .. voice.muffle(message))
+					"<" .. voice.muffle(source_name) .. "/" .. short_type .. "> " .. voice.muffle(message))
 				end
 			end
 		end
