@@ -136,14 +136,16 @@ end
 
 --- Activates the voice system.
 function voice.activate()
-	voice.pseudo_random = PcgRandom(os.time())
-	
-	minetest.register_on_chat_message(voice.on_chat_message)
-	
-	voice.register_chatcommand("t", "talk", "Talk", voice.talk_parameters)
-	voice.register_chatcommand("s", "shout", "Shout", voice.shout_parameters)
-	voice.register_chatcommand("w", "whisper", "Whisper", voice.whisper_parameters)
-	voice.register_global_chatcommand()
+	if settings.get_bool("voice_activate", true) then
+		voice.pseudo_random = PcgRandom(os.time())
+		
+		minetest.register_on_chat_message(voice.on_chat_message)
+		
+		voice.register_chatcommand("t", "talk", "Talk", voice.talk_parameters)
+		voice.register_chatcommand("s", "shout", "Shout", voice.shout_parameters)
+		voice.register_chatcommand("w", "whisper", "Whisper", voice.whisper_parameters)
+		voice.register_global_chatcommand()
+	end
 end
 
 --- Checks if the given distance is in the given range, considering
