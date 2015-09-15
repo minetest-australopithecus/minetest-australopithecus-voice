@@ -41,6 +41,9 @@ voice = {
 	--- Type constant for a whispered message.
 	TYPE_WHISPER = "whisper",
 	
+	--- The privilege that is needed for using the global command.
+	global_privilege = settings.get_string("voice_global_privilege", "voice_global"),
+	
 	--- The line of sight modification, which means that if the target does not
 	-- have line of sight with the source, this mod will be applied to
 	-- the range to limit it.
@@ -267,7 +270,7 @@ function voice.register_global_chatcommand()
 				return true
 			end
 			
-			if minetest.check_player_privs(player_name, { voice_global = true }) then
+			if minetest.check_player_privs(player_name, { [voice.global_privilege] = true }) then
 				minetest.chat_send_all("<" .. player_name .. "/g> " .. message)
 				
 				return true

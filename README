@@ -43,6 +43,10 @@ The system can be configured by adding settings to the `minetest.conf`:
     # If the system should be activated, defaults to true.
     voice_activate = true.
     
+    # The name of the privilege required to use the global command,
+    # defaults to "voice_global".
+    voice_global_privilege = voice_global
+    
     # The modificator which is applied to the ranges if the target
     # does not have a line of sight to the source, defaults to 0.4.
     voice_line_of_sight_mod = 0.4
