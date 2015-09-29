@@ -142,6 +142,11 @@ function voice.activate()
 	if settings.get_bool("voice_activate", true) then
 		voice.pseudo_random = PcgRandom(os.time())
 		
+		minetest.register_privilege(voice.global_privilege, {
+			description = "The privilege needed to use the global chat.",
+			give_to_singleplayer = true
+		})
+		
 		minetest.register_on_chat_message(voice.on_chat_message)
 		
 		voice.register_chatcommand("t", "talk", "Talk", voice.talk_parameters)
@@ -260,6 +265,7 @@ function voice.register_global_chatcommand()
 	local command = {
 		description = "Global",
 		params = "<message>",
+		privs = { [voice.global_privilege] = true },
 		func = function(player_name, message)
 			local suppress, message = voice.invoke_message_callbacks(
 				minetest.get_player_by_name(player_name),
@@ -270,13 +276,9 @@ function voice.register_global_chatcommand()
 				return true
 			end
 			
-			if minetest.check_player_privs(player_name, { [voice.global_privilege] = true }) then
-				minetest.chat_send_all("<" .. player_name .. "/g> " .. message)
-				
-				return true
-			end
+			minetest.chat_send_all("<" .. player_name .. "/g> " .. message)
 			
-			return false, "Denied"
+			return true
 		end
 	}
 	
