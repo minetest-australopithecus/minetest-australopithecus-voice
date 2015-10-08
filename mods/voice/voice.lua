@@ -52,9 +52,6 @@ voice = {
 	--- The callbacks for when a message is send.
 	message_callbacks = List:new(),
 	
-	--- The source for random chances when modifying messages.
-	pseudo_random = nil,
-	
 	--- The parameters for talking.
 	
 	--- The parameters for shouting.
@@ -140,8 +137,6 @@ end
 --- Activates the voice system.
 function voice.activate()
 	if settings.get_bool("voice_activate", true) then
-		voice.pseudo_random = PcgRandom(os.time())
-		
 		minetest.register_privilege(voice.global_privilege, {
 			description = "The privilege needed to use the global chat.",
 			give_to_singleplayer = true
@@ -229,7 +224,7 @@ end
 -- @param rate The rate. A number between 0 and 1, with 1 being always true.
 -- @return true if there is a chance.
 function voice.random(rate)
-	return (voice.pseudo_random:next(0, 100) / 100) <= rate
+	return (random.next_int(0, 100) / 100) <= rate
 end
 
 --- Registers a chat chommand.
