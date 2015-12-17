@@ -8,7 +8,7 @@ the messages, or nothing at all.
 
 
 How does it work?
-=================
+-----------------
 
 There are basically three "volumes" a player can say something in, talk, shout
 and whisper. Shout reaches obviously the farthest, followed by talk and whisper.
@@ -30,13 +30,13 @@ There is no global chat anymore as long as voice is activated.
 
 
 Usage
-=====
+-----
 
 The system activates itself, you just need to add the mod to the subgame.
 
 
 Configuration
-=============
+-------------
 
 The system can be configured by adding settings to the `minetest.conf`:
 
@@ -72,7 +72,7 @@ The system can be configured by adding settings to the `minetest.conf`:
     
 
 Callbacks
-=========
+---------
 
 You can register callbacks for every send message in which you can either
 suppress or modify it. The signature for the callbacks is:
