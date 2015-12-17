@@ -7,6 +7,16 @@ range to them. If you move out of this range, you might only get part of
 the messages, or nothing at all.
 
 
+Features
+--------
+
+ * All chat messages are limited by distance.
+ * Three "volumes": talking, whispering and shouting.
+ * Range of the messages are further limited if there is no line of sight.
+ * No global chat, except with a special privilege.
+ * Completely configurable from the configuration.
+
+
 How does it work?
 -----------------
 
