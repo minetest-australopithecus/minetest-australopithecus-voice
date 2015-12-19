@@ -119,3 +119,10 @@ callback is the one that can decide whether the message is actually send or
 suppressed. If the message is is modified, the modified message is handed
 to all callbacks that follow.
 
+
+Force activation
+----------------
+
+You can force the activation of the system, even if it has been disabled in
+the configuration, by invoking `voice.activate_internal`.
+
