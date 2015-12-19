@@ -61,6 +61,10 @@
 	<td class="summary">Activates the voice system.</td>
 	</tr>
 	<tr>
+	<td class="name" nowrap><a href="#activate_internal">activate_internal ()</a></td>
+	<td class="summary">Activates the system, without checking the configuration.</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#in_range">in_range (distance, range, line_of_sight)</a></td>
 	<td class="summary">Checks if the given distance is in the given range, considering
  the line of sight.</td>
@@ -128,6 +132,18 @@
 	<td class="summary">Type constant for a whispered message.</td>
 	</tr>
 	<tr>
+	<td class="name" nowrap><a href="#activate_automatically">activate_automatically</a></td>
+	<td class="summary">If the system should be activated automatically.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#active">active</a></td>
+	<td class="summary">If the system is active/has been activated.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#global_privilege">global_privilege</a></td>
+	<td class="summary">The privilege that is needed for using the global command.</td>
+	</tr>
+	<tr>
 	<td class="name" nowrap><a href="#line_of_sight_mod">line_of_sight_mod</a></td>
 	<td class="summary">The line of sight modification, which means that if the target does not
  have line of sight with the source, this mod will be applied to
@@ -136,10 +152,6 @@
 	<tr>
 	<td class="name" nowrap><a href="#message_callbacks">message_callbacks</a></td>
 	<td class="summary">The callbacks for when a message is send.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#pseudo_random">pseudo_random</a></td>
-	<td class="summary">The source for random chances when modifying messages.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#understandable">understandable</a></td>
@@ -200,6 +212,20 @@
     </dt>
     <dd>
     Activates the voice system.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "activate_internal"></a>
+    <strong>activate_internal ()</strong>
+    </dt>
+    <dd>
+    Activates the system, without checking the configuration.
 
 
 
@@ -579,6 +605,48 @@
 
 </dd>
     <dt>
+    <a name = "activate_automatically"></a>
+    <strong>activate_automatically</strong>
+    </dt>
+    <dd>
+    If the system should be activated automatically.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "active"></a>
+    <strong>active</strong>
+    </dt>
+    <dd>
+    If the system is active/has been activated.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "global_privilege"></a>
+    <strong>global_privilege</strong>
+    </dt>
+    <dd>
+    The privilege that is needed for using the global command.
+
+
+
+
+
+
+
+</dd>
+    <dt>
     <a name = "line_of_sight_mod"></a>
     <strong>line_of_sight_mod</strong>
     </dt>
@@ -600,20 +668,6 @@
     </dt>
     <dd>
     The callbacks for when a message is send.
-
-
-
-
-
-
-
-</dd>
-    <dt>
-    <a name = "pseudo_random"></a>
-    <strong>pseudo_random</strong>
-    </dt>
-    <dd>
-    The source for random chances when modifying messages.
 
 
 

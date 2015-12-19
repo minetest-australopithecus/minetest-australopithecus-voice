@@ -41,6 +41,12 @@ voice = {
 	--- Type constant for a whispered message.
 	TYPE_WHISPER = "whisper",
 	
+	--- If the system should be activated automatically.
+	activate_automatically = settings.get_bool("voice_activate", true),
+	
+	--- If the system is active/has been activated.
+	active = false,
+	
 	--- The privilege that is needed for using the global command.
 	global_privilege = settings.get_string("voice_global_privilege", "voice_global"),
 	
@@ -136,7 +142,14 @@ end
 
 --- Activates the voice system.
 function voice.activate()
-	if settings.get_bool("voice_activate", true) then
+	if voice.activate_automatically then
+		voice.activate_internal()
+	end
+end
+
+--- Activates the system, without checking the configuration.
+function voice.activate_internal()
+	if not voice.active then
 		minetest.register_privilege(voice.global_privilege, {
 			description = "The privilege needed to use the global chat.",
 			give_to_singleplayer = true
@@ -148,6 +161,8 @@ function voice.activate()
 		voice.register_chatcommand("s", "shout", "Shout", voice.shout_parameters)
 		voice.register_chatcommand("w", "whisper", "Whisper", voice.whisper_parameters)
 		voice.register_global_chatcommand()
+		
+		voice.active = true
 	end
 end
 
